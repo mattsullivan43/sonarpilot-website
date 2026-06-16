@@ -262,43 +262,6 @@
 .fc-3 { bottom: 22%; left: -10%; animation-delay: 1.6s; }
 .fc-4 { bottom: 2%; right: -4%; animation-delay: 2.4s; }
 
-/* scroll cue */
-.hero__scrollcue {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 9px;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-.hero__mouse {
-  width: 22px;
-  height: 36px;
-  border: 1.5px solid var(--text-faint);
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  padding-top: 6px;
-}
-.hero__wheel {
-  width: 3px;
-  height: 7px;
-  background: var(--cyan);
-  border-radius: 2px;
-  animation: wheel 1.6s ease-in-out infinite;
-}
-@keyframes wheel {
-  0% { opacity: 0; transform: translateY(-3px); }
-  40% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(9px); }
-}
-
 /* ===================================================================
    MARQUEE
    =================================================================== */

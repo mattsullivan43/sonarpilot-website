@@ -42,9 +42,6 @@ export default function Features() {
     <section className="section features" id="features">
       <div className="container">
         <header className="section-head">
-          <span className="eyebrow">
-            <span className="dot" /> Capabilities
-          </span>
           <h2 className="section-title">
             Everything from the call,
             <br />

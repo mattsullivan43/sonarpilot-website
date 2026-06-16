@@ -35,12 +35,6 @@ export default function Hero() {
           initial="hidden"
           animate="show"
         >
-          <motion.div variants={item}>
-            <span className="eyebrow">
-              <span className="dot" /> Built for real-estate operators
-            </span>
-          </motion.div>
-
           <motion.h1 className="hero__title" variants={item}>
             Turn every call into
             <br />
@@ -74,13 +68,6 @@ export default function Hero() {
           <FloatingCards />
         </motion.div>
       </motion.div>
-
-      <div className="hero__scrollcue" aria-hidden="true">
-        <span>Scroll</span>
-        <div className="hero__mouse">
-          <div className="hero__wheel" />
-        </div>
-      </div>
     </section>
   )
 }
