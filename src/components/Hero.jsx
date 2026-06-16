@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import logo from '../assets/logo-mark.png'
 import { MAILTO } from '../constants'
@@ -16,6 +16,15 @@ const item = {
 
 export default function Hero() {
   const ref = useRef(null)
+  // Scroll parallax is desktop-only. On mobile the address bar shows/hides as
+  // you scroll, which resizes the viewport and makes scroll-linked transforms
+  // jump every frame — the "glitching" you saw. So we bind these only on a
+  // fine-pointer, wide screen.
+  const [parallax, setParallax] = useState(false)
+  useEffect(() => {
+    setParallax(window.matchMedia('(min-width: 900px) and (pointer: fine)').matches)
+  }, [])
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
@@ -28,10 +37,10 @@ export default function Hero() {
   return (
     <section className="hero" id="top" ref={ref}>
       <span className="hero__anchor" id="hero" />
-      <motion.div className="container hero__inner" style={{ opacity }}>
+      <motion.div className="container hero__inner" style={parallax ? { opacity } : undefined}>
         <motion.div
           className="hero__copy"
-          style={{ y: yText }}
+          style={parallax ? { y: yText } : undefined}
           variants={container}
           initial="hidden"
           animate="show"
@@ -59,7 +68,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div className="hero__art" style={{ y: yArt, scale }}>
+        <motion.div className="hero__art" style={parallax ? { y: yArt, scale } : undefined}>
           <SonarEmblem />
           <FloatingCards />
         </motion.div>

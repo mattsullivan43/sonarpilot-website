@@ -20,13 +20,29 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Lock body scroll while the mobile menu is open, and close on Escape.
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    const onKey = (e) => e.key === 'Escape' && setOpen(false)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
   return (
     <motion.header
-      className={`nav ${scrolled ? 'nav--scrolled' : ''}`}
+      className={`nav ${scrolled ? 'nav--scrolled' : ''} ${open ? 'nav--open' : ''}`}
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
     >
+      <div
+        className={`nav__scrim ${open ? 'is-open' : ''}`}
+        onClick={() => setOpen(false)}
+        aria-hidden="true"
+      />
       <div className="container nav__inner">
         <a href="#top" className="nav__brand">
           <img src={logo} alt="SonarPilot" className="nav__logo" />
@@ -51,8 +67,8 @@ export default function Nav() {
             Get started
           </a>
           <button
-            className="nav__burger"
-            aria-label="Menu"
+            className={`nav__burger ${open ? 'is-open' : ''}`}
+            aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >

@@ -18,15 +18,19 @@ export default function SonarBackground() {
     let last = 0
     let pingTimer = 0
 
+    const isMobile = window.matchMedia('(max-width: 820px)').matches
+
     function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2)
       w = canvas.clientWidth
       h = canvas.clientHeight
       canvas.width = w * dpr
       canvas.height = h * dpr
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
-      const count = Math.min(90, Math.floor((w * h) / 17000))
+      const count = isMobile
+        ? Math.min(34, Math.floor((w * h) / 26000))
+        : Math.min(90, Math.floor((w * h) / 17000))
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
@@ -70,9 +74,9 @@ export default function SonarBackground() {
         ctx.fill()
       }
 
-      // Near-neighbor links (cheap O(n^2) on a small set)
+      // Near-neighbor links (cheap O(n^2) on a small set) — skip on mobile.
       ctx.lineWidth = 1
-      for (let i = 0; i < particles.length; i++) {
+      for (let i = 0; !isMobile && i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const a = particles[i]
           const b = particles[j]

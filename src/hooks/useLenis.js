@@ -6,7 +6,11 @@ import Lenis from 'lenis'
 export default function useLenis() {
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
+    // Touch devices already scroll smoothly; running Lenis on top of native
+    // touch scrolling causes jitter and fights the browser. Desktop only.
+    const isTouch =
+      window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 900
+    if (prefersReduced || isTouch) return
 
     const lenis = new Lenis({
       duration: 1.15,
