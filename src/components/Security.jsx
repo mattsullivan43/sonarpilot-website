@@ -17,9 +17,6 @@ export default function Security() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="eyebrow">
-            <span className="dot" /> Security & privacy
-          </span>
           <h2 className="section-title">
             Built so nothing leaks —<br />
             <span className="grad-text">not even the details.</span>

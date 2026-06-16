@@ -17,9 +17,6 @@ export default function CTA() {
               <span key={i} style={{ animationDelay: `${i * 0.9}s` }} />
             ))}
           </div>
-          <span className="eyebrow">
-            <span className="dot" /> Stop losing the details
-          </span>
           <h2 className="cta__title">
             Your next call is about to
             <br />

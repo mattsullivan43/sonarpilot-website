@@ -46,35 +46,50 @@ const STEP_MS = 1150
 
 export default function DemoShowcase() {
   const ref = useRef(null)
-  const [started, setStarted] = useState(false)
   const [idx, setIdx] = useState(-1)
+  const [playing, setPlaying] = useState(false)
+  const [hasStarted, setHasStarted] = useState(false)
 
-  // Start once the section scrolls into view.
+  const done = idx >= TRANSCRIPT.length - 1
+
+  // Auto-play the first time the section scrolls into view.
   useEffect(() => {
     const el = ref.current
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting && !started) setStarted(true)
+        if (e.isIntersecting && !hasStarted) {
+          setHasStarted(true)
+          setPlaying(true)
+        }
       },
       { threshold: 0.4 },
     )
     if (el) io.observe(el)
     return () => io.disconnect()
-  }, [started])
+  }, [hasStarted])
 
+  // Advance one line at a time while playing; stop at the end.
   useEffect(() => {
-    if (!started) return
-    if (idx >= TRANSCRIPT.length - 1) return
-    const id = setTimeout(() => setIdx((i) => i + 1), idx === -1 ? 500 : STEP_MS)
+    if (!playing) return
+    if (idx >= TRANSCRIPT.length - 1) {
+      setPlaying(false)
+      return
+    }
+    const id = setTimeout(() => setIdx((i) => i + 1), idx === -1 ? 450 : STEP_MS)
     return () => clearTimeout(id)
-  }, [started, idx])
+  }, [playing, idx])
 
-  const replay = () => {
-    setIdx(-1)
-    // re-kick on next tick
-    setStarted(false)
-    requestAnimationFrame(() => setStarted(true))
+  // One control: restart when finished, otherwise toggle play/pause.
+  const toggle = () => {
+    if (done) {
+      setIdx(-1)
+      setPlaying(true)
+    } else {
+      setPlaying((p) => !p)
+    }
   }
+
+  const progress = ((idx + 1) / TRANSCRIPT.length) * 100
 
   // Derive card contents from emitted lines up to current index.
   const visible = TRANSCRIPT.slice(0, idx + 1)
@@ -91,15 +106,10 @@ export default function DemoShowcase() {
     if (e.card === 'meeting') meeting = { value: e.value, when: e.when }
   })
 
-  const done = idx >= TRANSCRIPT.length - 1
-
   return (
     <section className="section demo" id="demo" ref={ref}>
       <div className="container">
         <header className="section-head section-head--center">
-          <span className="eyebrow">
-            <span className="dot" /> Live demo
-          </span>
           <h2 className="section-title">
             Watch a call become <span className="grad-text">structured work.</span>
           </h2>
@@ -113,13 +123,21 @@ export default function DemoShowcase() {
           {/* Transcript */}
           <div className="demo__panel glass">
             <div className="demo__panelhead">
-              <div className="demo__dots">
-                <span /> <span /> <span />
-              </div>
+              <button
+                className="demo__ctrl"
+                onClick={toggle}
+                aria-label={done ? 'Replay demo' : playing ? 'Pause demo' : 'Play demo'}
+                title={done ? 'Replay' : playing ? 'Pause' : 'Play'}
+              >
+                {done ? <Replay /> : playing ? <Pause /> : <PlayIcon />}
+              </button>
               <span className="demo__filename">oak-ridge-call.mp3</span>
               <span className={`demo__badge ${done ? 'is-done' : ''}`}>
-                {done ? 'Processed' : started ? 'Listening…' : 'Ready'}
+                {done ? 'Processed' : playing ? 'Listening…' : idx > -1 ? 'Paused' : 'Ready'}
               </span>
+            </div>
+            <div className="demo__progress" aria-hidden="true">
+              <span style={{ width: `${progress}%` }} />
             </div>
             <div className="demo__transcript">
               <AnimatePresence>
@@ -137,10 +155,10 @@ export default function DemoShowcase() {
                   </motion.div>
                 ))}
               </AnimatePresence>
-              {!started && <div className="demo__placeholder">Scroll into view to play…</div>}
+              {!hasStarted && <div className="demo__placeholder">Press play to start…</div>}
             </div>
             {done && (
-              <button className="demo__replay" onClick={replay}>
+              <button className="demo__replay" onClick={toggle}>
                 <Replay /> Replay
               </button>
             )}
@@ -247,6 +265,21 @@ function Replay() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
       <path d="M3 12a9 9 0 109-9 9 9 0 00-7 3.3M3 3v4h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+function PlayIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  )
+}
+function Pause() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="6" y="5" width="4" height="14" rx="1" />
+      <rect x="14" y="5" width="4" height="14" rx="1" />
     </svg>
   )
 }
