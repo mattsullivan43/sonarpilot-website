@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { MAILTO } from '../constants'
 
 export default function CTA() {
   return (
@@ -29,7 +30,7 @@ export default function CTA() {
             tasks, and a meeting — in seconds.
           </p>
           <div className="cta__actions">
-            <a href="#top" className="btn btn-primary btn-lg">
+            <a href={MAILTO} className="btn btn-primary btn-lg">
               Start free <Arrow />
             </a>
             <a href="#demo" className="btn btn-ghost btn-lg">

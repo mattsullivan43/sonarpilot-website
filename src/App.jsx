@@ -4,7 +4,6 @@ import ScrollProgress from './components/ScrollProgress'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import LogoMarquee from './components/LogoMarquee'
-import Pipeline from './components/Pipeline'
 import DemoShowcase from './components/DemoShowcase'
 import Features from './components/Features'
 import Security from './components/Security'
@@ -24,7 +23,6 @@ export default function App() {
       <main>
         <Hero />
         <LogoMarquee />
-        <Pipeline />
         <DemoShowcase />
         <Features />
         <Steps />

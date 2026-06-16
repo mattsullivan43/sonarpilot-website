@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import logo from '../assets/logo-mark.png'
+import { MAILTO } from '../constants'
 
 const LINKS = [
-  { label: 'How it works', href: '#how' },
   { label: 'Live demo', href: '#demo' },
   { label: 'Features', href: '#features' },
   { label: 'Security', href: '#security' },
@@ -41,13 +41,13 @@ export default function Nav() {
               {l.label}
             </a>
           ))}
-          <a href="#cta" className="btn btn-primary nav__cta-mobile" onClick={() => setOpen(false)}>
+          <a href={MAILTO} className="btn btn-primary nav__cta-mobile" onClick={() => setOpen(false)}>
             Get started
           </a>
         </nav>
 
         <div className="nav__actions">
-          <a href="#cta" className="btn btn-primary nav__cta">
+          <a href={MAILTO} className="btn btn-primary nav__cta">
             Get started
           </a>
           <button

@@ -1,4 +1,5 @@
 import logo from '../assets/logo-mark.png'
+import { MAILTO } from '../constants'
 
 export default function Footer() {
   const year = 2026
@@ -20,14 +21,13 @@ export default function Footer() {
         <nav className="footer__cols">
           <div className="footer__col">
             <h4>Product</h4>
-            <a href="#how">How it works</a>
             <a href="#demo">Live demo</a>
             <a href="#features">Features</a>
             <a href="#security">Security</a>
           </div>
           <div className="footer__col">
             <h4>Get started</h4>
-            <a href="#cta">Start free</a>
+            <a href={MAILTO}>Start free</a>
             <a href="#top">Back to top</a>
           </div>
           <div className="footer__col">

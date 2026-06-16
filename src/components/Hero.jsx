@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import logo from '../assets/logo-mark.png'
+import { MAILTO } from '../constants'
 
 const ease = [0.22, 1, 0.36, 1]
 
@@ -48,18 +49,13 @@ export default function Hero() {
           </motion.p>
 
           <motion.div className="hero__actions" variants={item}>
-            <a href="#cta" className="btn btn-primary">
+            <a href={MAILTO} className="btn btn-primary">
               Start free
               <Arrow />
             </a>
             <a href="#demo" className="btn btn-ghost">
               <Play /> See it work
             </a>
-          </motion.div>
-
-          <motion.div className="hero__meta" variants={item}>
-            <Check /> Recording or transcript&nbsp;&nbsp;·&nbsp;&nbsp;<Check /> Synced across
-            devices&nbsp;&nbsp;·&nbsp;&nbsp;<Check /> Encrypted by default
           </motion.div>
         </motion.div>
 
@@ -124,13 +120,6 @@ function Play() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
       <path d="M8 5v14l11-7z" />
-    </svg>
-  )
-}
-function Check() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-      <path d="M20 6L9 17l-5-5" stroke="var(--cyan)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
