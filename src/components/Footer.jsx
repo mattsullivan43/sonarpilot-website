@@ -31,16 +31,19 @@ export default function Footer() {
             <a href="#top">Back to top</a>
           </div>
           <div className="footer__col">
-            <h4>Contact</h4>
-            <a href="mailto:hello@sonarpilot.co">hello@sonarpilot.co</a>
+            <h4>Company</h4>
+            <a href="mailto:mjsullivan0910@gmail.com">Contact</a>
+            <a href="/privacy">Privacy Policy</a>
             <a href="https://sonarpilot.co">sonarpilot.co</a>
           </div>
         </nav>
       </div>
 
       <div className="container footer__bottom">
-        <span>© {year} SonarPilot. All rights reserved.</span>
-        <span className="footer__made">Made for people who live on the phone.</span>
+        <span>© {year} SonarPilot · Matt Sullivan. All rights reserved.</span>
+        <span className="footer__made">
+          <a href="/privacy">Privacy Policy</a>
+        </span>
       </div>
     </footer>
   )
