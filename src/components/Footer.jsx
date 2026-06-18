@@ -33,6 +33,7 @@ export default function Footer() {
           <div className="footer__col">
             <h4>Company</h4>
             <a href="mailto:mjsullivan0910@gmail.com">Contact</a>
+            <a href="/support">Support</a>
             <a href="/privacy">Privacy Policy</a>
             <a href="https://sonarpilot.co">sonarpilot.co</a>
           </div>
